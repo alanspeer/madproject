@@ -28,7 +28,7 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
         mv = (MapView)findViewById(R.id.map1);
         mv.getController().setZoom(14);
-        mv.getController().setCenter(new GeoPoint(40.1, 22.5));
+        mv.getController().setCenter(new GeoPoint(51.05,-0.72));
     }
 
     // onCreateOptionsMenu()
@@ -56,6 +56,13 @@ public class MainActivity extends Activity
             // activity is sending the data back - in a full app, there would be more than
             // one secondary activity and each would be launched with its own request code.
             startActivityForResult(intent, 0);
+            return true;
+        }
+        if (item.getItemId() == R.id.setlocation)
+        {
+            Intent intent = new Intent (this, SetLocation.class);
+
+            startActivityForResult(intent, 1);
             return true;
         }
         return false;
@@ -93,6 +100,19 @@ public class MainActivity extends Activity
                 {
                     mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
+            }
+            else if (requestCode == 1)
+            {
+                // Get the Bundle from the Intent.
+                Bundle bundle = intent.getExtras();
+
+                // Get the latitude entry from the Bundle
+                double latitude = bundle.getDouble("com.example.latitude");
+
+                // Get the longitude entry from the Bundle
+                double longitude = bundle.getDouble("com.example.longitude");
+
+                mv.getController().setCenter(new GeoPoint(latitude, longitude));
             }
         }
     }
