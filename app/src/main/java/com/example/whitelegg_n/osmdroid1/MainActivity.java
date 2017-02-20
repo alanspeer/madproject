@@ -65,6 +65,12 @@ public class MainActivity extends Activity
             startActivityForResult(intent, 1);
             return true;
         }
+        if (item.getItemId() == R.id.choosemapstyle)
+        {
+            Intent intent = new Intent (this, MapChooseListActivity.class);
+
+            startActivityForResult(intent , 0);
+        }
         return false;
     }
 
